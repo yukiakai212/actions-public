@@ -41,7 +41,7 @@ jobs:
 
       - name: Prepare release tag
         id: release
-        uses: ./dist/prepare-release-tag
+        uses: yukiakai212/actions-public/dist/prepare-release-tag@v1
         with:
           source: package.json
           
