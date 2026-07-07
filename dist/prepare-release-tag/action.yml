@@ -38,5 +38,3 @@ runs:
       run: |
         git tag -f v${{ steps.tag.outputs.version }}
         git push origin -f refs/tags/v${{ steps.tag.outputs.version }}
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
