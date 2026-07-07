@@ -1,0 +1,42 @@
+name: Prepare Release Tag
+
+description: Resolve the package version, create and push the corresponding Git tag.
+
+inputs:
+  source:
+    description: Source file used to resolve the package version.
+    required: false
+    default: package.json
+
+outputs:
+  version:
+    description: Resolved package version.
+    value: ${{ steps.tag.outputs.version }}
+
+  tag:
+    description: Resolved npm publish tag.
+    value: ${{ steps.tag.outputs.tag }}
+
+runs:
+  using: composite
+
+  steps:
+    - name: Resolve publish version
+      id: tag
+      uses: yukiakai212/publish-tag@v1
+      with:
+        source: ${{ inputs.source }}
+
+    - name: Configure Git
+      shell: bash
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+
+    - name: Create and push release tag
+      shell: bash
+      run: |
+        git tag -f v${{ steps.tag.outputs.version }}
+        git push origin -f refs/tags/v${{ steps.tag.outputs.version }}
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
