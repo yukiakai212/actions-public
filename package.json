@@ -18,9 +18,11 @@
     "typecheck:workspace": "tsc -p tsconfig.workspace.json",
     "build:assets": "tsx workspace/scripts/copy-action-assets.ts",
     "build": "npx tsup && npm run build:assets",
+    "build:private": "npm run build",
     "build:public": "npx tsup --config tsup.public.config.ts && npm run build:assets",
     "docs": "npx typedoc",
     "prepare:artifact": "tsx workspace/release/prepareArtifact.ts",
+    "prepare:artifact:private": "tsx workspace/release/preparePrivateArtifact.ts",
     "prepare": "is-ci || husky"
   },
   "files": [

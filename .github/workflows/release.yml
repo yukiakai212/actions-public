@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  release:
+  prepare-release-tag:
     runs-on: ubuntu-latest
 
     permissions:
@@ -20,3 +20,7 @@ jobs:
       - uses: yukiakai212/actions-public/dist/prepare-release-tag@v1
         with:
           source: package.json
+  update-major-tag:
+    needs: prepare-release-tag
+
+    uses: yukiakai212/actions-public/.github/workflows/update-major-tag.yml@v1
