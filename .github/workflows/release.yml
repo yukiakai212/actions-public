@@ -5,12 +5,12 @@ on:
     branches:
       - main
 
+permissions:
+      contents: write
+
 jobs:
   prepare-release-tag:
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
 
     steps:
       - uses: actions/checkout@v4
