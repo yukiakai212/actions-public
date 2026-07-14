@@ -38,10 +38,12 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+      - name: Verify package
+        run: npx packverify validate
 
-      - name: Prepare release tag
+      - name: Create release tag
         id: release
-        uses: yukiakai212/actions-public/dist/prepare-release-tag@v1
+        uses: yukiakai212/actions-public/dist/create-release-tag@v1
         with:
           source: package.json
           

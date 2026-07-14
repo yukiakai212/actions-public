@@ -1,6 +1,6 @@
-name: Prepare Release Tag
+name: Create Release Tag
 
-description: Resolve the package version, create and push the corresponding Git tag.
+description: Resolve the package version, create and push the corresponding Git release tag.
 
 inputs:
   source:
@@ -11,18 +11,26 @@ inputs:
 outputs:
   version:
     description: Resolved package version.
-    value: ${{ steps.tag.outputs.version }}
+    value: ${{ steps.publish.outputs.version }}
+  
+  major:
+    description: Resolved major version.
+    value: ${{ steps.publish.outputs.major }}
 
   tag:
     description: Resolved npm publish tag.
-    value: ${{ steps.tag.outputs.tag }}
+    value: ${{ steps.publish.outputs.tag }}
+    
+  release-tag:
+    description: Created Git release tag.
+    value: v${{ steps.publish.outputs.version }}
 
 runs:
   using: composite
 
   steps:
     - name: Resolve publish version
-      id: tag
+      id: publish
       uses: yukiakai212/publish-tag@v1
       with:
         source: ${{ inputs.source }}
@@ -35,6 +43,8 @@ runs:
 
     - name: Create and push release tag
       shell: bash
+      env:
+        RELEASE_TAG: v${{ steps.publish.outputs.version  }}
       run: |
-        git tag -f v${{ steps.tag.outputs.version }}
-        git push origin -f refs/tags/v${{ steps.tag.outputs.version }}
+        git tag -f "${RELEASE_TAG}"
+        git push origin -f "refs/tags/${RELEASE_TAG}"

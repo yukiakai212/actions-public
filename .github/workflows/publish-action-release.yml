@@ -1,0 +1,63 @@
+name: Publish GitHub Action Release
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        description: Node.js version.
+        required: false
+        default: "24"
+        type: string
+      source:
+        description: Package manifest used to resolve the release version.
+        required: false
+        default: package.json
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-action-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    if: startsWith(github.event.head_commit.message, 'release:')
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+          cache: npm
+
+      # ----------------------------------------------------------------------
+      # GitHub Actions use two tags:
+      #
+      #   vX.Y.Z  -> immutable release tag
+      #   vX      -> moving major tag
+      #
+      # Both actions intentionally resolve the package version independently.
+      # Although this duplicates metadata resolution, it keeps each composite
+      # action completely self-contained and independently reusable.
+      # ----------------------------------------------------------------------
+
+      - name: Create release tag
+        id: release
+        uses: yukiakai212/actions-public/dist/create-release-tag@v1
+        with:
+          source: ${{ inputs.source }}
+
+      - name: Update major tag
+        uses: yukiakai212/actions-public/dist/update-major-tag@v1
+        with:
+          major: ${{ steps.release.outputs.major }}
+          release-tag: ${{ steps.release.outputs.release-tag }}

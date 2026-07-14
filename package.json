@@ -1,6 +1,6 @@
 {
   "name": "actions",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Github Action",
   "type": "module",
   "main": "./dist/index.js",
@@ -33,7 +33,7 @@
     "actions"
   ],
   "author": "Yuki_akai",
-  "homepage": "https://github.com/yukiakai212/actions",
+  "homepage": "https://github.com/yukiakai212/actions-public",
   "funding": "https://github.com/sponsors/yukiakai212",
   "engines": {
     "node": ">= 16"
@@ -46,10 +46,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yukiakai212/actions.git"
+    "url": "git+https://github.com/yukiakai212/actions-public.git"
   },
   "bugs": {
-    "url": "https://github.com/yukiakai212/actions/issues"
+    "url": "https://github.com/yukiakai212/actions-public/issues"
   },
   "license": "MIT",
   "devDependencies": {

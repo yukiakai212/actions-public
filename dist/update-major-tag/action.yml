@@ -1,0 +1,33 @@
+name: Update Major Tag
+
+description: Update the major release tag to point to an existing release tag.
+
+inputs:
+  release-tag:
+    description: Existing release tag.
+    required: true
+
+  major:
+    description: Major version.
+    required: true
+
+runs:
+  using: composite
+
+  steps:
+    - name: Configure Git
+      shell: bash
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+
+    - name: Update major tag
+      shell: bash
+      env:
+        RELEASE_TAG: ${{ inputs.release-tag }}
+        MAJOR_TAG: v${{ inputs.major }}
+      run: |
+        echo "Updating ${MAJOR_TAG} -> ${RELEASE_TAG}"
+
+        git tag -f "${MAJOR_TAG}" "${RELEASE_TAG}"
+        git push origin -f "refs/tags/${MAJOR_TAG}"
