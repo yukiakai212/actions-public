@@ -34,10 +34,9 @@ jobs:
         with:
           node-version: ${{ inputs.node-version }}
           registry-url: https://registry.npmjs.org/
-          cache: 'npm'
 
       - name: Verify package
-        run: npx packverify validate --ignore-pack-scripts
+        run: npx packverify@latest validate --ignore-pack-scripts
 
       - name: Create release tag
         id: release
