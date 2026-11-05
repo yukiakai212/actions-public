@@ -51,12 +51,12 @@ jobs:
 
       - name: Create release tag
         id: release
-        uses: yukiakai212/actions-public/dist/create-release-tag@v1
+        uses: yukiakai212/actions-public/actions/create-release-tag@v1
         with:
           source: ${{ inputs.source }}
 
       - name: Update major tag
-        uses: yukiakai212/actions-public/dist/update-major-tag@v1
+        uses: yukiakai212/actions-public/actions/update-major-tag@v1
         with:
           major: ${{ steps.release.outputs.major }}
           release-tag: ${{ steps.release.outputs.release-tag }}
