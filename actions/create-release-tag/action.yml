@@ -24,7 +24,7 @@ outputs:
     
   release-tag:
     description: Created Git release tag.
-    value: v${{ steps.publish.outputs.version }}
+    value: ${{ steps.metadata.outputs.release-tag }}
 
 runs:
   using: composite
