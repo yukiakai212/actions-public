@@ -8,10 +8,11 @@ on:
         required: false
         default: "24"
         type: string
-      source:
-        description: Package manifest used to resolve the release version.
+        
+      package-directory:
+        description: Repository-relative directory of the Node package.
         required: false
-        default: package.json
+        default: "."
         type: string
 
 permissions:
@@ -53,7 +54,8 @@ jobs:
         id: release
         uses: yukiakai212/actions-public/actions/create-release-tag@v1
         with:
-          source: ${{ inputs.source }}
+          package-type: node
+          package-directory: ${{ inputs.package-directory }}
 
       - name: Update major tag
         uses: yukiakai212/actions-public/actions/update-major-tag@v1

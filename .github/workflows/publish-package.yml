@@ -8,6 +8,12 @@ on:
         required: false
         default: "24"
         type: string
+        
+      package-directory:
+        description: Repository-relative directory of the Node package.
+        required: false
+        type: string
+        default: "."
 
 permissions:
   contents: write
@@ -39,13 +45,15 @@ jobs:
           registry-url: https://registry.npmjs.org/
 
       - name: Verify package
+        working-directory: ${{ inputs.package-directory }}
         run: npx packverify@latest validate --ignore-pack-scripts
 
       - name: Create release tag
         id: release
         uses: yukiakai212/actions-public/actions/create-release-tag@v1
         with:
-          source: package.json
+          package-type: node
+          package-directory: ${{ inputs.package-directory }}
       
       - name: Resolve npm dist-tag
         id: npm-tag
@@ -56,6 +64,7 @@ jobs:
         run: echo "tag=$NPM_TAG" >> "$GITHUB_OUTPUT"
       
       - name: Publish to npm with provenance
+        working-directory: ${{ inputs.package-directory }}
         run: npm publish --ignore-scripts --provenance --access public --tag "$NPM_TAG"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
