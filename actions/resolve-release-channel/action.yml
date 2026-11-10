@@ -1,0 +1,13 @@
+name: Resolve Release Channel
+description: Resolve the release channel for the current repository branch.
+
+outputs:
+  channel:
+    description: Release channel. `latest` on the default branch; otherwise the branch name.
+
+  is-latest:
+    description: Whether the current branch resolves to the `latest` channel.
+
+runs:
+  using: node24
+  main: dist/index.cjs

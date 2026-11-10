@@ -11,17 +11,17 @@ inputs:
   package-directory:
     description: Repository-relative directory containing the package manifest.
     required: false
-    default: "."
+    default: '.'
 
 outputs:
   version:
     description: Resolved semantic version without build metadata.
     value: ${{ steps.metadata.outputs.version }}
-  
+
   major:
     description: Major version of the created release tag.
     value: ${{ steps.metadata.outputs.major }}
-    
+
   release-tag:
     description: Created Git release tag.
     value: ${{ steps.metadata.outputs.release-tag }}

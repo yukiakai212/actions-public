@@ -12,8 +12,8 @@
   },
   "scripts": {
     "test": "npx vitest run --reporter verbose --coverage",
-    "format": "prettier --write **/*.{js,ts,json}",
-    "format:check": "prettier --check **/*.{js,ts,json}",
+    "format": "prettier --write **/*.{js,ts,json,yml}",
+    "format:check": "prettier --check **/*.{js,ts,json,yml}",
     "lint": "eslint src/**/*.ts",
     "typecheck:workspace": "tsc -p tsconfig.workspace.json",
     "build:assets": "tsx workspace/scripts/copy-action-assets.ts",
@@ -72,6 +72,7 @@
     "vitest": "^4.0.15"
   },
   "dependencies": {
-    "@actions/core": "^3.0.1"
+    "@actions/core": "^3.0.1",
+    "@actions/github": "^9.1.1"
   }
 }
